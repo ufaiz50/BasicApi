@@ -1,0 +1,53 @@
+﻿using API.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace API.Context
+{
+    public class MyContext : DbContext
+    {
+        
+        public MyContext(DbContextOptions<MyContext> options) : base(options)
+        {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Education> Educations { get; set; }
+        public DbSet<Profilling> Profillings { get; set; }
+        public DbSet<University> Universities { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.account)
+                .WithOne(a => a.Employee)
+                .HasForeignKey<Account>(e => e.NIK);
+
+            modelBuilder.Entity<Account>()
+                .HasOne(a => a.Profilling)
+                .WithOne(p => p.account)
+                .HasForeignKey<Profilling>(p => p.NIK);
+
+            modelBuilder.Entity<Profilling>()
+                .HasOne(p => p.education)
+                .WithMany(edu => edu.Profilling);
+
+            modelBuilder.Entity<Education>()
+                .HasOne(edu => edu.University)
+                .WithMany(u => u.education);
+        }
+
+        
+
+    }
+}
