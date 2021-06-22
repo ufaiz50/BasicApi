@@ -12,6 +12,10 @@ namespace API.Models
     [Table("tb_M_Employee")]
     public class Employee
     {
+        public Employee()
+        {
+        }
+
         [Key]
         public string NIK { get; set; }
         public string FirstName { get; set; }
@@ -25,6 +29,18 @@ namespace API.Models
 
         [JsonIgnore]
         public virtual Account account { get; set; }
+
+        public Employee(string nIK, string firstName, string lastName, string email, int salary, string phoneNumber, DateTime birthDate, Gender gender)
+        {
+            NIK = nIK;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Salary = salary;
+            PhoneNumber = phoneNumber;
+            BirthDate = birthDate;
+            Gender = gender;
+        }
     }
 
     public enum Gender

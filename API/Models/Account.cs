@@ -20,6 +20,16 @@ namespace API.Models
         [JsonIgnore]
         public virtual Profilling Profilling { get; set; }
 
+
+        public Account(string nIK, string password)
+        {
+            NIK = nIK;
+            Password = password;
+        }
+
+        public Account()
+        {
+        }
     }
     
 }

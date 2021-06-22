@@ -11,6 +11,10 @@ namespace API.Models
     [Table("tb_M_Education")]
     public class Education
     {
+        public Education()
+        {
+        }
+
         [Key]
         public int Id { get; set; }
         public string Degree { get; set; }
@@ -22,5 +26,12 @@ namespace API.Models
 
         [JsonIgnore]
         public virtual University University { get; set; }
+
+        public Education(string degree, string gPA, int UniversityId)
+        {
+            Degree = degree;
+            GPA = gPA;
+            this.UniversityId = UniversityId;
+        }
     }
 }

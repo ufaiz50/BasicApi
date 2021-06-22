@@ -8,11 +8,16 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("tb_M_Profilling")]
+    [Table("tb_T_Profilling")]
     public class Profilling
     {
+        public Profilling()
+        {
+        }
+
         [Key]
         public string NIK { get; set; }
+
         public int EducationId { get; set; }
 
         [JsonIgnore]
@@ -20,5 +25,10 @@ namespace API.Models
         [JsonIgnore]
         public virtual Education education { get; set; }
 
+        public Profilling(string nIK, Education education)
+        {
+            NIK = nIK;
+            this.education = education;
+        }
     }
 }
