@@ -23,10 +23,13 @@ namespace API.Repository.Data
             var checkEmail = myContext.Employees.FirstOrDefault(e => e.Email == register.email);
             if (checkEmail != null) return 3;
 
+            //generate password
+            var getPassword = Hashing.Hashing.HashPassword(register.password);
+
             Employee employee = new Employee(register.NIK, register.firstname, register.lastname
                 , register.email, register.salary, register.phoneNumber, register.birthdate, register.gender);
             
-            Account account = new Account(register.NIK, register.password);
+            Account account = new Account(register.NIK, getPassword);
 
             Education education = new Education(register.degree, register.GPA, register.UniversityId);
             Profilling profilling = new Profilling(register.NIK, education);
