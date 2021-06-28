@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Mail;
 using API.Models;
 
-namespace API.Hashing
+namespace API.Jwt
 {
     public class SendEmail
     {
@@ -44,10 +44,18 @@ namespace API.Hashing
 
         public static string FormatText(Account account, string GUID)
         {
-            return "<div style='border - style:solid; border - width:thin; border - color:#dadce0;border-radius:8px;padding:40px 20px' align='center'" +
-                $"<h1>Halo { account.Employee.FirstName}</h1><br>" +
-                $"<h3>Anda Telah melakukan permintaan reset kata sandi pada {DateTime.Now}<br>" +
-                $"Berikut Kata sandi baru anda : {GUID}</h3></div>";
+            return $"<div style='border - style:solid; border - width:thin; border - color:#dadce0;border-radius:8px;padding:40px 20px' align='center'" +
+                        $"<div align='left'" +
+                            $"<h1></h1>" +
+                                $"<br>" +
+                            $"<h3>Halo { account.Employee.FirstName }</h3>" +
+                            $"<p>" +
+                                $"Anda Telah melakukan permintaan reset kata sandi pada {DateTime.Now}" +
+                                $"<br>" +
+                                $"Berikut Kata sandi baru anda : {GUID}" +
+                            $"</p>" +
+                        $"</div>" +
+                    $"</div>";
             }
     }
 }

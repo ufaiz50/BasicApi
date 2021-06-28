@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("tb_T_Account")]
+    [Table("tb_M_Account")]
     public class Account
     {
         [Key]
@@ -19,12 +19,15 @@ namespace API.Models
         public virtual Employee Employee { get; set; }
         [JsonIgnore]
         public virtual Profilling Profilling { get; set; }
+        //[JsonIgnore]
+        public virtual ICollection<AccountRole> AccountRole { get; set; }
 
 
         public Account(string nIK, string password)
         {
             NIK = nIK;
             Password = password;
+                        
         }
 
         public Account()

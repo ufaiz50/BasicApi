@@ -4,14 +4,16 @@ using API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20210624035841_updateUniv")]
+    partial class updateUniv
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,29 +31,7 @@ namespace API.Migrations
 
                     b.HasKey("NIK");
 
-                    b.ToTable("tb_M_Account");
-                });
-
-            modelBuilder.Entity("API.Models.AccountRole", b =>
-                {
-                    b.Property<int>("AccountRoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AccountNIK")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AccountRoleId");
-
-                    b.HasIndex("AccountNIK");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("tb_T_AccountRole");
+                    b.ToTable("tb_T_Account");
                 });
 
             modelBuilder.Entity("API.Models.Education", b =>
@@ -123,21 +103,6 @@ namespace API.Migrations
                     b.ToTable("tb_T_Profilling");
                 });
 
-            modelBuilder.Entity("API.Models.Role", b =>
-                {
-                    b.Property<int>("RoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("RoleName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RoleId");
-
-                    b.ToTable("tb_M_Role");
-                });
-
             modelBuilder.Entity("API.Models.University", b =>
                 {
                     b.Property<int>("UniversityId")
@@ -162,23 +127,6 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("API.Models.AccountRole", b =>
-                {
-                    b.HasOne("API.Models.Account", "Account")
-                        .WithMany("AccountRole")
-                        .HasForeignKey("AccountNIK");
-
-                    b.HasOne("API.Models.Role", "Role")
-                        .WithMany("AccountRole")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("API.Models.Education", b =>
@@ -213,8 +161,6 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Account", b =>
                 {
-                    b.Navigation("AccountRole");
-
                     b.Navigation("Profilling");
                 });
 
@@ -226,11 +172,6 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Employee", b =>
                 {
                     b.Navigation("account");
-                });
-
-            modelBuilder.Entity("API.Models.Role", b =>
-                {
-                    b.Navigation("AccountRole");
                 });
 
             modelBuilder.Entity("API.Models.University", b =>

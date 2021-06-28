@@ -1,4 +1,5 @@
 ﻿using API.Repository.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace API.Base
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class BaseController<Entity, Repository, Key> : ControllerBase
@@ -22,6 +24,7 @@ namespace API.Base
             this.repository = repository;
         }
 
+        
         [HttpGet]
         public ActionResult Get()
         {
@@ -43,6 +46,7 @@ namespace API.Base
             }
         }
 
+        
         [HttpGet("{key}")]
         public ActionResult Get(Key key)
         {
@@ -65,6 +69,7 @@ namespace API.Base
 
         }
 
+        
         [HttpDelete]
         public ActionResult Delete(Key key)
         {
@@ -86,6 +91,7 @@ namespace API.Base
             }
         }
 
+        
         [HttpPost]
         public ActionResult Insert(Entity entity)
         {
@@ -110,6 +116,7 @@ namespace API.Base
 
         }
 
+        
         [HttpPut]
         public ActionResult Update(Entity entity, Key key)
         {

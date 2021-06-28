@@ -3,6 +3,7 @@ using API.Context;
 using API.Models;
 using API.Repository.Data;
 using API.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
+    [Authorize(Roles = "Employee,Manager")]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : BaseController<Employee, EmployeeRepository, string>
@@ -24,6 +26,7 @@ namespace API.Controllers
             this.repository = repository;
         }
 
+        [AllowAnonymous]
         [HttpPost("/API/Employees/Register")]
         public ActionResult Register(RegisterVM register)
         {
@@ -32,7 +35,7 @@ namespace API.Controllers
                 var regis = repository.Register(register);
                 switch(regis)
                 {
-                    case 4:
+                    case 5:
                         return Ok(new { status = HttpStatusCode.OK, result = regis, message = "Registrasi berhasil dilakukan" });
                     case 2:
                         return BadRequest(new { status = HttpStatusCode.BadRequest, result = regis, message = "Registrasi gagal Nik sudah ada" });
@@ -41,35 +44,54 @@ namespace API.Controllers
                     default:
                         return BadRequest(new { status = HttpStatusCode.BadRequest, result = regis, message = "Registrasi gagal" });
                 }
-            }catch (Exception)
+        }catch (Exception)
             {
                 return BadRequest(new { status = HttpStatusCode.BadRequest, result = 0, message = "Registrasi gagal Exception di terima" });
             }
         }
 
-        [HttpPost("Login")]
-        public ActionResult Login(LoginVM loginVM)
+
+        [Authorize]
+        [HttpGet("ShowData")]
+        public ActionResult ShowData()
         {
             try
             {
-                var isCheck = repository.Login(loginVM);
-                switch (isCheck)
-                {
-                    case 1:
-                        return Ok(new { status = HttpStatusCode.OK, result = isCheck, message = "Login Sukses" });
-                    case 2:
-                        return BadRequest(new { status = HttpStatusCode.BadRequest, result = isCheck, message = "NIK/ Email tidak sesuai dengan data didatabase" });
-                    case 3:
-                        return BadRequest(new { status = HttpStatusCode.BadRequest, result = isCheck, message = "Password tidak sesuai dengan data didatabase" });
-                    default:
-                        return BadRequest(new { status = HttpStatusCode.BadRequest, result = isCheck, message = "NIK dan Password tidak sesuai dengan data didatabase" });
-                }
-            }catch (Exception)
+                var get = repository.ShowData();
+                if (get == null)
+                    return NotFound(new
+                    {
+                        status = HttpStatusCode.NotFound,
+                        result = get,
+                        message = "Data tidak berhasil didapat atau belum ada data di dalam database"
+                    });
+                return Ok(new { status = HttpStatusCode.OK, result = get, message = "Data berhasil didapat" });
+            }
+            catch (Exception e)
             {
-                return BadRequest(new { status = HttpStatusCode.BadRequest, result = 0, message = "Login gagal Exception di terima" });
+                return BadRequest(new { status = HttpStatusCode.InternalServerError, result = e.Message, message = "terjadi exception" });
             }
         }
 
-
+        [HttpGet("ShowDataByNIK/{nik}")]
+        public ActionResult ShowDataByNIK(string NIK)
+        {
+            try
+            {
+                var get = repository.ShowDataByNIK(NIK);
+                if (get == null)
+                    return NotFound(new
+                    {
+                        status = HttpStatusCode.NotFound,
+                        result = get,
+                        message = "Data tidak tersedia"
+                    });
+                return Ok(new { status = HttpStatusCode.OK, result = get, message = "Data berhasil didapat" });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { status = HttpStatusCode.InternalServerError, result = e.Message, message = "terjadi exception" });
+            }
+        }
     }
 }
