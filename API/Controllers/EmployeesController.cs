@@ -4,6 +4,7 @@ using API.Models;
 using API.Repository.Data;
 using API.ViewModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,8 +15,9 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Authorize(Roles = "Employee,Manager")]
+    //[Authorize(Roles = "Employee,Manager")]
     [Route("api/[controller]")]
+    //[EnableCors("AllowOrigin")]
     [ApiController]
     public class EmployeesController : BaseController<Employee, EmployeeRepository, string>
     {

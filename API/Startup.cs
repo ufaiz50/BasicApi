@@ -57,6 +57,18 @@ namespace API
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
             };
             });
+
+            // Enable Cors from global
+            /*services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });*/
+
+            // Enable from origin
+            /*services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.WithOrigins("https://localhost:44327"));
+            });*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +78,12 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //Enable Cors from Global
+            app.UseCors(options => options.AllowAnyOrigin());
+
+            // Enable cors from origin
+            //app.UseCors(options => options.WithOrigins("https://localhost:44327"));
 
             app.UseHttpsRedirection();
 
@@ -79,6 +97,7 @@ namespace API
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
