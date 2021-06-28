@@ -32,6 +32,11 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Enable from origin
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.WithOrigins("https://localhost:44327"));
+            });
             services.AddControllers();
             services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("APIContext")));
             services.AddControllersWithViews()
@@ -59,35 +64,32 @@ namespace API
             });
 
             // Enable Cors from global
-            /*services.AddCors(c =>
-            {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
-            });*/
+            //services.AddCors(c =>
+            //{
+            //    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            //});
 
-            // Enable from origin
-            /*services.AddCors(c =>
-            {
-                c.AddPolicy("AllowOrigin", options => options.WithOrigins("https://localhost:44327"));
-            });*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             //Enable Cors from Global
-            app.UseCors(options => options.AllowAnyOrigin());
+            //app.UseCors(options => options.AllowAnyOrigin());
 
             // Enable cors from origin
-            //app.UseCors(options => options.WithOrigins("https://localhost:44327"));
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("AllowOrigin");
 
             app.UseAuthentication();
 

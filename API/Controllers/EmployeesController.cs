@@ -17,7 +17,7 @@ namespace API.Controllers
 {
     //[Authorize(Roles = "Employee,Manager")]
     [Route("api/[controller]")]
-    //[EnableCors("AllowOrigin")]
+    [EnableCors("AllowOrigin")]
     [ApiController]
     public class EmployeesController : BaseController<Employee, EmployeeRepository, string>
     {
@@ -29,7 +29,7 @@ namespace API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("/API/Employees/Register")]
+        [HttpPost("Register")]
         public ActionResult Register(RegisterVM register)
         {
             try
