@@ -22,12 +22,12 @@ for (let i in animal) {
 console.log("\n\n\n")
 
 for (let j in animal) {
-    let string = animal[j].class["name"];
+    if (animal[j].class["name"] == "vertebrata") animal[j].class["name"] = "Non-Mamalia";
 
-    if (string == "vertebrata") {
-        string = "Non-Mamalia";
-    }
-    
-    /*console.log(string.charAt(0).toUpperCase() + string.slice(1));*/
+    /*var string = animal[j].class["name"];
+    console.log(string.replace(/^\w/, c => c.toUpperCase()));
+    console.log(string.replace(string.charAt(0), string.charAt(0).toUpperCase()))
+    console.log(string.charAt(0).toUpperCase() + string.slice(1));*/
+
     console.log(animal[j]);
 }
