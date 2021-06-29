@@ -1,3 +1,0 @@
-/API/obj/*
-/API/bi
-/API/Migrations
