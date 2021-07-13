@@ -28,7 +28,6 @@ namespace API.Controllers
             this.repository = repository;
         }
 
-        [AllowAnonymous]
         [HttpPost("Register")]
         public ActionResult Register(RegisterVM register)
         {
@@ -48,12 +47,11 @@ namespace API.Controllers
                 }
         }catch (Exception)
             {
-                return BadRequest(new { status = HttpStatusCode.BadRequest, result = 0, message = "Registrasi gagal Exception di terima" });
+                return NotFound(new { status = HttpStatusCode.BadRequest, result = 0, message = "Registrasi gagal Exception di terima" });
             }
         }
 
 
-        [Authorize]
         [HttpGet("ShowData")]
         public ActionResult ShowData()
         {
@@ -67,7 +65,7 @@ namespace API.Controllers
                         result = get,
                         message = "Data tidak berhasil didapat atau belum ada data di dalam database"
                     });
-                return Ok(new { status = HttpStatusCode.OK, result = get, message = "Data berhasil didapat" });
+                return Ok(get);
             }
             catch (Exception e)
             {

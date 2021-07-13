@@ -13,14 +13,15 @@ const animal = [
     { name: "Taro", species: "cat", class: { name: "vertebrata" } }
 ];
 
-
+//Filter species cat
 for (let i in animal) {
     if (animal[i].species == "cat") {
-        console.log(animal[i]);
+        /*console.log(animal[i]);*/
     }
 }
-console.log("\n\n\n")
+/*console.log("\n\n\n")*/
 
+//Manipulasi string
 for (let j in animal) {
     if (animal[j].class["name"] == "vertebrata") animal[j].class["name"] = "Non-Mamalia";
 
@@ -29,5 +30,12 @@ for (let j in animal) {
     console.log(string.replace(string.charAt(0), string.charAt(0).toUpperCase()))
     console.log(string.charAt(0).toUpperCase() + string.slice(1));*/
 
-    console.log(animal[j]);
+    /*console.log(animal[j]);*/
 }
+let cats = [];
+
+/*animal.filter(data => data.species == "cat" ? cats.push(data) : "");*/
+cats.push(animal.filter(x => x.species == "cat"));
+/*console.log(cats)*/
+
+/*animal.forEach(a => a.class.name == "vertebrata" ? a.class.name = "Non-Mamalia" : console.log(a));*/

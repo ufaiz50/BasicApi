@@ -4,7 +4,9 @@ using API.Models;
 using API.Repository;
 using API.Repository.Data;
 using API.ViewModel;
+using API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -20,8 +22,9 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Authorize(Roles = "Employee,Manageer")]
+    /*[Authorize(Roles = "Employee,Manageer")]*/
     [Route("api/[controller]")]
+    [EnableCors("AllowOrigin")]
     [ApiController]
     public class AccountsController : BaseController<Account, AccountRepository, string>
     {
@@ -46,7 +49,8 @@ namespace API.Controllers
                     case 1:
                     var getData = repository.GetDataLogin(login);
                         var jwt = new Jwt.Jwt(_configuration, myContext).GenJwt(getData);
-                        return Ok(new { status = HttpStatusCode.OK, token = jwt, message = "Login Sukses" });
+                        var jwtView = new JwtTokenVM("Login Berhasil", jwt, HttpStatusCode.OK);
+                        return Ok(jwtView);
                     case 2:
                         return BadRequest(new { status = HttpStatusCode.BadRequest, result = isCheck, message = "NIK/ Email tidak sesuai dengan data didatabase" });
                     case 3:

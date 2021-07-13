@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_AdminLayout";
+}
+
+
+<div class="contianer" >
+    <table id="example" class="display table" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">NIK</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Salary</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Birth Date</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Degree</th>
+                <th scope="col">Gpa</th>
+                <th scope="col">University Name</th>
+                <th scope="col">Get Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+     </table>
+</div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="getDetail">
+
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script type="text/javascript" src="~/js/ajax.js"></script>
+    }
+
+
+
+
+    @*<div class="text-center">
+            <h1 class="display-4">Welcome</h1>
+            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        </div>*@

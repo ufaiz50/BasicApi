@@ -35,7 +35,8 @@ namespace API
             // Enable from origin
             services.AddCors(c =>
             {
-                c.AddPolicy("AllowOrigin", options => options.WithOrigins("https://localhost:44327"));
+                c.AddPolicy("AllowOrigin", options => 
+                    options.WithOrigins("https://localhost:44327").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             });
             services.AddControllers();
             services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("APIContext")));
@@ -60,14 +61,14 @@ namespace API
                     ValidAudience = Configuration["Jwt:Audience"],
                     ValidIssuer = Configuration["Jwt:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-            };
+                };
             });
 
             // Enable Cors from global
-            //services.AddCors(c =>
-            //{
-            //    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
-            //});
+            /*services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });*/
 
         }
 
@@ -81,14 +82,14 @@ namespace API
             }
 
             //Enable Cors from Global
-            //app.UseCors(options => options.AllowAnyOrigin());
+            /*app.UseCors("AllowOrigin");*/
 
-            // Enable cors from origin
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            // Enable cors from origin
             app.UseCors("AllowOrigin");
 
             app.UseAuthentication();

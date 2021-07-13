@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="contianer">
+    <div class="navbar">
+        <img src="" alt="" class="logo" />
+        <nav>
+            <ul>
+                <li>
+                    <a href="" class=""></a>
+                    <a href="" class=""></a>
+                    <a href="" class=""></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+
+
+
+
+
+@*<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>*@
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+   $.ajax({
+       url: "https://localhost:5001/Api/Employees",
+       success: function (result) {
+           console.log(result);
+        }
+    })
+</script>
